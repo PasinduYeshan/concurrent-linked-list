@@ -145,11 +145,17 @@ double RunSerialLinkedListOperations(int n, int m, float prob_member, float prob
     clock_t start, end;
     double time_taken;
 
+    // Create random values list
+    int *random_values = malloc(m * sizeof(int));
+    for (int i = 0; i < m; i++) {
+        random_values[i] = RandomValue();
+    }
+
     start = clock();
 
     int i;
     for (i = 0; i < m; i++) {
-        int value = RandomValue();
+        int value = random_values[i];
         if (operation_array[i] == 0) {
             Member(value, head_p);
         } else if (operation_array[i] == 1) {
