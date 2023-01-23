@@ -10,9 +10,9 @@
 #### Mutex Program
 * Open a cmd and enter following command.
 * `gcc -g -Wall -o mutex mutex_ls.c -lpthread -lm`
-* Once the program is compiled enter `./serial` to execute the program.
+* Once the program is compiled enter `./mutex` to execute the program.
 
 #### Mutex Program
 * Open a cmd and enter following command.
 * `gcc -g -Wall -o rw_lock rw_lock_ls.c -lpthread -lm`
-* Once the program is compiled enter `./serial` to execute the program.
+* Once the program is compiled enter `./rw_lock` to execute the program.

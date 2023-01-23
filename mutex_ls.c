@@ -24,6 +24,7 @@ struct thread_args {
     unsigned short threadId;
     int numThreads;
     int *operation_array;
+    int *random_values;
 };
 
 // Check if the given value is node of the linked list or not
@@ -154,9 +155,10 @@ void *mutexFn(void *arg) {
     unsigned short threadId = args->threadId;
     int numThreads = args->numThreads;
     int *operation_array = args->operation_array;
+    int *random_values = args->random_values;
 
     for (int i = threadId; i < m; i += numThreads) {
-        int value = RandomValue();
+        int value = random_values[i];
         if (operation_array[i] == 0) {
             pthread_mutex_lock(&mutex);
             Member(value, *head_pp);
@@ -186,6 +188,12 @@ double RunMutexLinkedListOperations(int n, int m, float prob_member, float prob_
     pthread_mutex_init(&mutex, NULL); // Initialize mutex
     pthread_t *threads = malloc(numThreads * sizeof(pthread_t)); // Create threads to store the threads
 
+    // Create random values list
+    int *random_values = malloc(m * sizeof(int));
+    for (int i = 0; i < m; i++) {
+        random_values[i] = RandomValue();
+    }
+
     clock_t start, end;
     double time_taken;
 
@@ -199,6 +207,7 @@ double RunMutexLinkedListOperations(int n, int m, float prob_member, float prob_
         args->threadId = t;
         args->numThreads = numThreads;
         args->operation_array = operation_array;
+        args->random_values = random_values;
         pthread_create(&threads[t], NULL, mutexFn, (void *) args);
     }
 
